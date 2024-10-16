@@ -21,3 +21,6 @@ urlpatterns = [
     path('', include('blog_app.urls')),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL , document_root = settings.STATIC_ROOT)
