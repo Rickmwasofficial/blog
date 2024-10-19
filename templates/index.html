@@ -38,9 +38,8 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                         {% if user.is_authenticated %}
                         <a class="btn btn-primary" href="/auth/logout">Logout</a>
                         {% else %}
@@ -134,7 +133,6 @@
                     <nav aria-label="Pagination mx-auto">
                         <hr class="my-0" />
                         <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
                             {% for i in total_pages %}
                             {% if pageno == i %}
                             <li class="page-item active" aria-current="page"><a class="page-link" href="/?page={{ i }}">{{ i }}</a></li>
@@ -142,7 +140,6 @@
                             <li class="page-item"><a class="page-link" href="/?page={{ i }}">{{ i }}</a></li>
                             {% endif %}
                             {% endfor %}
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -211,7 +208,7 @@
                             </div>
                         </div>
                         <!-- Copyright - Bootstrap Brain Component -->
-                        <div class="pt-3">
+                        <div class="pt-3" id='contact'>
                             <div class="container border-top border-light-subtle pt-3">
                             <div class="row">
                                 <div class="col-12">
