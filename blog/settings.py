@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8cn!b$m6u=eae5c+6i9)*6mmf6(x^%9ai1-&m3x(pgtmfq+-ri'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['maverick-blogs.onrender.com', 'localhost', '127.0.0.1']
 
