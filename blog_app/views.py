@@ -3,6 +3,7 @@ from .models import Post, Comment, Category
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 import math
+import random
 
 # Create your views here.
 def index(request):
@@ -11,6 +12,8 @@ def index(request):
 
     if category_id:
         posts = Post.objects.filter(category_id=category_id)
+        is_filter = True
+        cat = Category.objects.get(id=category_id).name
     else:
         if page:
             posts = Post.objects.all()
@@ -22,6 +25,8 @@ def index(request):
             posts = Post.objects.all()
             posts = posts[:4]
             page = 1
+        is_filter = False
+        cat = None
 
 
     comments = Comment.objects.all()
@@ -33,7 +38,9 @@ def index(request):
         'comments': comments,
         'categories': categories,
         'pageno': page,
-        'featured': Post.objects.get(is_featured=1)
+        'featured': Post.objects.get(is_featured=1),
+        'filter': is_filter,
+        'curr_cat': cat
     }
 
     return render(request, 'index.html', context)
@@ -98,3 +105,35 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def search(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            categories = Category.objects.filter(name__icontains=query)
+            
+            if categories.exists():
+                posts = Post.objects.filter(category_id=categories[0].id)
+                posts = random.sample(list(posts), 4)
+                context = {
+                    'categories': Category.objects.all(),
+                    'posts': posts,
+                    'query': query
+                }
+                return render(request, 'index.html', context)
+            else:
+                posts = Post.objects.filter(post_by__icontains=query)
+                if posts.exists():
+                    posts = random.sample(list(posts), 4)
+                    context = {
+                        'categories': Category.objects.all(),
+                        'posts': posts,
+                        'query': query
+                    }
+                    return render(request, 'index.html', context)
+                else:
+                    messages.info(request, 'No results found for your search.')
+        else:
+            messages.info(request, 'Please enter a search query.')
+    
+    return redirect('index')
