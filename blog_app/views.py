@@ -114,7 +114,8 @@ def search(request):
             
             if categories.exists():
                 posts = Post.objects.filter(category_id=categories[0].id)
-                posts = random.sample(list(posts), 4)
+                if list(posts) > 4:
+                        posts = random.sample(list(posts), 4)
                 context = {
                     'categories': Category.objects.all(),
                     'posts': posts,
@@ -124,7 +125,8 @@ def search(request):
             else:
                 posts = Post.objects.filter(post_by__icontains=query)
                 if posts.exists():
-                    posts = random.sample(list(posts), 4)
+                    if list(posts) > 4:
+                        posts = random.sample(list(posts), 4)
                     context = {
                         'categories': Category.objects.all(),
                         'posts': posts,
